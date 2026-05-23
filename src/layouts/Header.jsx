@@ -15,47 +15,25 @@ const Header = () => {
             </div>
           </div>
           <div className="ht-right">
-            <a href="#" className="login-panel">
-              <i className="fa fa-user"></i>Login
-            </a>
-            <div className="lan-selector">
-              <select
-                className="language_drop"
-                name="countries"
-                id="countries"
-                style={{ width: "300px" }}
-              >
-                <option
-                  value="yt"
-                  data-image="/img/flag-1.jpg"
-                  data-imagecss="flag yt"
-                  data-title="English"
-                >
-                  English
-                </option>
-                <option
-                  value="yu"
-                  data-image="/img/flag-2.jpg"
-                  data-imagecss="flag yu"
-                  data-title="Bangladesh"
-                >
-                  German
-                </option>
-              </select>
-            </div>
-            <div className="top-social">
-              <a href="#">
-                <i className="ti-facebook"></i>
+            <div className="ht-right">
+              <a href="#" className="login-panel">
+                <i className="fa fa-user" />
+                Login
               </a>
-              <a href="#">
-                <i className="ti-twitter-alt"></i>
-              </a>
-              <a href="#">
-                <i className="ti-linkedin"></i>
-              </a>
-              <a href="#">
-                <i className="ti-pinterest"></i>
-              </a>
+              <div className="top-social">
+                <a href="#">
+                  <i className="ti-facebook" />
+                </a>
+                <a href="#">
+                  <i className="ti-twitter-alt" />
+                </a>
+                <a href="#">
+                  <i className="ti-linkedin" />
+                </a>
+                <a href="#">
+                  <i className="ti-pinterest" />
+                </a>
+              </div>
             </div>
           </div>
         </div>

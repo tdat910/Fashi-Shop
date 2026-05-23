@@ -1,0 +1,25 @@
+.product-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.product-pagination button {
+  padding: 8px 14px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.product-pagination button.active {
+  background: #222;
+  color: #fff;
+  border-color: #222;
+}
+
+.product-pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

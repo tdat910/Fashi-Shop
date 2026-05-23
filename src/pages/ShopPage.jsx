@@ -1,82 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import ProductItem from "../components/ProductItem";
+import productsData from "../data/product.json";
+import "/Hoc_Tap_Code/Tổng Hợp Dự Án/Fashi-Shop/public/css/ShopPage.css";
+
+const PRODUCTS_PER_PAGE = 9;
 
 const ShopPage = () => {
-  // Dữ liệu bóc tách chuẩn xác từ 9 sản phẩm trong shop.html của bạn
-  const productsData = [
-    {
-      id: 1,
-      name: "Pure Pineapple",
-      category: "Towel",
-      price: "₫14.00",
-      image: "/img/products/product-1.jpg",
-      isSale: true,
-    },
-    {
-      id: 2,
-      name: "Guangzhou sweater",
-      category: "Coat",
-      price: "₫13.00",
-      image: "/img/products/product-2.jpg",
-      isSale: false,
-    },
-    {
-      id: 3,
-      name: "Guangzhou sweater",
-      category: "Shoes",
-      price: "₫34.00",
-      image: "/img/products/product-3.jpg",
-      isSale: false,
-    },
-    {
-      id: 4,
-      name: "Microfiber Wool Scarf",
-      category: "Coat",
-      price: "₫64.00",
-      image: "/img/products/product-4.jpg",
-      isSale: false,
-    },
-    {
-      id: 5,
-      name: "Men's Painted Hat",
-      category: "Shoes",
-      price: "₫44.00",
-      image: "/img/products/product-5.jpg",
-      isSale: false,
-    },
-    {
-      id: 6,
-      name: "Converse Shoes",
-      category: "Shoes",
-      price: "₫34.00",
-      image: "/img/products/product-6.jpg",
-      isSale: false,
-    },
-    {
-      id: 7,
-      name: "Pure Pineapple",
-      category: "Towel",
-      price: "₫64.00",
-      image: "/img/products/product-7.jpg",
-      isSale: true,
-    },
-    {
-      id: 8,
-      name: "2 Layer Windbreaker",
-      category: "Coat",
-      price: "₫44.00",
-      image: "/img/products/product-8.jpg",
-      isSale: false,
-    },
-    {
-      id: 9,
-      name: "Converse Shoes",
-      category: "Shoes",
-      price: "₫34.00",
-      image: "/img/products/product-9.jpg",
-      isSale: false,
-    },
-  ];
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(productsData.length / PRODUCTS_PER_PAGE);
+
+  const currentProducts = productsData.slice(
+    (currentPage - 1) * PRODUCTS_PER_PAGE,
+    currentPage * PRODUCTS_PER_PAGE
+  );
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <section className="product-shop spad">
@@ -85,10 +27,39 @@ const ShopPage = () => {
           <div className="col-lg-12 order-1 order-lg-2">
             <div className="product-list">
               <div className="row">
-                {productsData.map((product) => (
+                {currentProducts.map((product) => (
                   <ProductItem key={product.id} product={product} />
                 ))}
               </div>
+
+              {/* Phân trang — chỉ hiện nếu có nhiều hơn 1 trang */}
+              {totalPages > 1 && (
+                <div className="product-pagination">
+                  <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                  >
+                    &laquo; Trước
+                  </button>
+
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <button
+                      key={page}
+                      onClick={() => handlePageChange(page)}
+                      className={currentPage === page ? "active" : ""}
+                    >
+                      {page}
+                    </button>
+                  ))}
+
+                  <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                  >
+                    Sau &raquo;
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -1,24 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProductItem from "../components/ProductItem";
-import productsData from "../data/product.json";
-import "/Hoc_Tap_Code/Tổng Hợp Dự Án/Fashi-Shop/public/css/ShopPage.css";
 
 const PRODUCTS_PER_PAGE = 9;
 
 const ShopPage = () => {
+  const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const totalPages = Math.ceil(productsData.length / PRODUCTS_PER_PAGE);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch(
+          `http://localhost:5000/api/products?page=${currentPage}&limit=${PRODUCTS_PER_PAGE}`
+        );
+        if (!res.ok) throw new Error("Không thể tải sản phẩm");
+        const json = await res.json();
+        setProducts(json.data);
+        setTotalPages(json.pagination.totalPages);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const currentProducts = productsData.slice(
-    (currentPage - 1) * PRODUCTS_PER_PAGE,
-    currentPage * PRODUCTS_PER_PAGE
-  );
+    fetchProducts();
+  }, [currentPage]); // gọi lại mỗi khi đổi trang
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  if (loading) return <p style={{ textAlign: "center", padding: "40px" }}>Đang tải sản phẩm...</p>;
+  if (error)   return <p style={{ textAlign: "center", padding: "40px", color: "red" }}>Lỗi: {error}</p>;
 
   return (
     <section className="product-shop spad">
@@ -27,12 +47,11 @@ const ShopPage = () => {
           <div className="col-lg-12 order-1 order-lg-2">
             <div className="product-list">
               <div className="row">
-                {currentProducts.map((product) => (
+                {products.map((product) => (
                   <ProductItem key={product.id} product={product} />
                 ))}
               </div>
 
-              {/* Phân trang — chỉ hiện nếu có nhiều hơn 1 trang */}
               {totalPages > 1 && (
                 <div className="product-pagination">
                   <button

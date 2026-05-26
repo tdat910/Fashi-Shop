@@ -4,6 +4,7 @@ import Footer from './layouts/Footer';
 import Breadcrumb from './components/Breadcrumb';
 import PartnerLogo from './components/PartnerLogo';
 import ShopPage from './pages/ShopPage';
+import Chatbot from '../src/components/Chatbot/Chatbot';
 
 function App() {
   return (
@@ -20,7 +21,10 @@ function App() {
       {/* 4. Khối Carousel các đối tác */}
       <PartnerLogo />
 
-      {/* 5. Khối chân trang */}
+      {/* 5. Khối Chatbot */}
+      <Chatbot />
+
+      {/* 6. Khối chân trang */}
       <Footer />
     </>
   );

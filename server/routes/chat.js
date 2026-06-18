@@ -5,7 +5,6 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-// Định nghĩa các tool để Gemini gọi DB
 const tools = [
   {
     functionDeclarations: [
@@ -57,7 +56,6 @@ const tools = [
   },
 ];
 
-// Hàm thực thi tool gọi DB
 const executeTool = async (toolName, args) => {
   try {
     let result;
@@ -91,7 +89,6 @@ const executeTool = async (toolName, args) => {
   }
 };
 
-// POST /api/chat
 router.post("/", async (req, res) => {
   const { message, history = [] } = req.body;
 
@@ -116,7 +113,6 @@ Nhiệm vụ của bạn:
     let response = await chat.sendMessage(message);
     let result = response.response;
 
-    // Xử lý Tool Use nếu Gemini muốn gọi DB
     while (result.functionCalls() && result.functionCalls().length > 0) {
       const functionCall = result.functionCalls()[0];
       const toolResult = await executeTool(functionCall.name, functionCall.args);

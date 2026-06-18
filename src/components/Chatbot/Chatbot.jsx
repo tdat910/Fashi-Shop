@@ -29,7 +29,7 @@ const Chatbot = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/chat", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text }),
@@ -59,7 +59,6 @@ const Chatbot = () => {
 
   return (
     <div className="chatbot-wrapper">
-      {/* Cửa sổ chat */}
       {isOpen && (
         <div className="chatbot-box">
           <div className="chatbot-header">
@@ -97,7 +96,6 @@ const Chatbot = () => {
         </div>
       )}
 
-      {/* Nút mở chat */}
       <button className="chatbot-toggle" onClick={() => setIsOpen((prev) => !prev)}>
         {isOpen ? "✕" : "💬"}
       </button>

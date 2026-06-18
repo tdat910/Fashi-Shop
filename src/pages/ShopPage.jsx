@@ -16,7 +16,7 @@ const ShopPage = () => {
       setError(null);
       try {
         const res = await fetch(
-          `http://localhost:5000/api/products?page=${currentPage}&limit=${PRODUCTS_PER_PAGE}`
+          `${import.meta.env.VITE_API_URL}/api/products?page=${currentPage}&limit=${PRODUCTS_PER_PAGE}`
         );
         if (!res.ok) throw new Error("Không thể tải sản phẩm");
         const json = await res.json();

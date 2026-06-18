@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../db");
 
-// GET /api/products?page=1&limit=9
 router.get("/", async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 9;
@@ -32,7 +31,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// GET /api/products/:id
 router.get("/:id", async (req, res) => {
   try {
     const result = await pool.query(
